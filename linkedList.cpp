@@ -21,23 +21,28 @@ int main(){
   cin.getline(command,90);
 
   if(strcmp(command, "ADD") == 0){
+    char* readName = new char[90];
+    char* readLastName = new char[90];
     char* studentname = new char[90];
     char* lastName = new char[90];
     int studentid;
     double studentGPA;
     cout<<"Enter Student First Name"<<endl;
-    cin.getline(studentname, 90);
+    cin.getline(readName, 90);
     cout<<"Enter Last Name"<<endl;
-    cin.getline(lastName, 90);
+    cin.getline(readLastName, 90);
     cout<<"Enter ID"<<endl;
     cin>>studentid;
     cout<<"Enter GPA"<<endl;
     cin>>studentGPA;
+    strcpy(studentname, readName);
+    strcpy(lastName, readLastName);
     Student* newStudent = new Student(studentname, lastName, studentid, studentGPA);
+    cout<<newStudent->getlastname()<<endl;
     add(newStudent, head, head);
- 
+
   }
-  
+
   else if(strcmp(command, "DELETE")==0){
    int key;
    cout<<"Enter ID of the student you wish to delete"<<endl;
@@ -57,12 +62,12 @@ int main(){
     running = false;
   }
 
-  
+
   }
 }
 
 
-  
+
 
 
 
@@ -71,22 +76,22 @@ void add (Student* newstudent, Node* &head, Node* current){
     head = new Node(newstudent);
     cout<<"First Student Added"<<endl;
   } //end if current == NULL
-  
+
   else{ //not first in list
     if(head->getNext() == NULL){ //if second thing in list
       if(current->getStudent()->getId() < newstudent->getId()){
 	current->setNext(new Node(newstudent));
       }//close if current id < newstudnet11 id
-    
+
     else if(current->getStudent()->getId() > newstudent->getId()){
       head = new Node(newstudent);
       head->setNext(current);
-      
+
     }//close else if current id > newstudent id
 
 
   }//close if head->getNext() == NULL
-  
+
   //seg fault section
   else{ //head next !== NULL
      if(current->getStudent()->getId() > newstudent->getId()){
@@ -96,7 +101,7 @@ void add (Student* newstudent, Node* &head, Node* current){
 
      } //end if current > new id
 
-     
+
      else if(current->getNext() == NULL){
        current->setNext(new Node(newstudent)); //defrencing NULL pointer causing seg fault?
        cout<<"added on end of list"<<endl;
@@ -114,7 +119,7 @@ void add (Student* newstudent, Node* &head, Node* current){
 
 
 
-     
+
      else{
        add(newstudent, head, current->getNext());
        cout<<"add recursively called"<<endl;
@@ -131,12 +136,12 @@ void add (Student* newstudent, Node* &head, Node* current){
 
 
 
-  
+
 
   }//end if current not equal to NULL
 
 
-  
+
 }
 void deleteStudent(Node* head, Node* current, int key){ //call with head as both head and current and p as current next
   if(head == NULL){
@@ -147,7 +152,7 @@ void deleteStudent(Node* head, Node* current, int key){ //call with head as both
     head = head->getNext();
     delete current;
     delete current->getStudent();
-   
+
 
   }
   else if(current->getNext()->getStudent()->getId() == key && current->getNext() == NULL){
@@ -174,8 +179,8 @@ void printStudents(Node* head, Node* current){ //call with head as both paramete
     cout<<"No students in list"<<endl;
   }
   else{
-    
-    
+
+
       cout<<current->getStudent()->getName();
       cout<<" ";
       cout<<current->getStudent()->getlastname();
@@ -183,14 +188,14 @@ void printStudents(Node* head, Node* current){ //call with head as both paramete
       cout<<current->getStudent()->getId();
       cout<<",";
       cout<<fixed<<setprecision(2)<<current->getStudent()->getGPA()<<endl;
-      
+
     if(!(current->getNext()==NULL)){
       printStudents(head, current->getNext());
     }
 
   }
 
- 
+
 
 
 
@@ -203,7 +208,7 @@ void averageGPA(Node* head, Node* current, double total, double count){
   else{
     total += current->getStudent()->getGPA();
     count++;
-  
+
   if(!(current->getNext()==NULL)){
     averageGPA(head, current->getNext(), total, count);
 
