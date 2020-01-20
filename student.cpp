@@ -5,9 +5,10 @@ Student :: Student(char* newName, char* lastName, int newid, double newGPA){
  name = new char[90];
  lastName = new char[90];
  name = newName;
+ lastname = lastName;
  id = newid;
  GPA = newGPA;
- lastname = lastName;
+ 
 
 
 
