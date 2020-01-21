@@ -40,7 +40,7 @@ int main(){
     Student* newStudent = new Student(studentname, lastName, studentid, studentGPA);
     //cout<<newStudent->getlastname()<<endl;
     add(newStudent, head, head);
-    // deleteStudent(head, head, 4);
+    deleteStudent(head, head, 4);
 
   }
 
